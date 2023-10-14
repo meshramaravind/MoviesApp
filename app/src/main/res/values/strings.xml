@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MoviesApp</string>
+
+    <string name="play">Play</string>
+    <string name="description">Image backdrop</string>
+    <string name="poster_description">Poster Image</string>
+    <string name="movie_video_trailer">Now Playing</string>
+</resources>
