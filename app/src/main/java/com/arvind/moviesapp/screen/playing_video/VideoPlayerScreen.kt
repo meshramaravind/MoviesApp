@@ -1,6 +1,7 @@
 package com.arvind.moviesapp.screen.playing_video
 
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import androidx.annotation.OptIn
 import androidx.compose.animation.AnimatedVisibility
@@ -49,6 +50,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.SimpleExoPlayer
+import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -56,6 +58,7 @@ import com.arvind.moviesapp.R
 import com.arvind.moviesapp.domain.models.videos.ResultsItem
 import com.arvind.moviesapp.domain.models.videos.VideosResponse
 import com.arvind.moviesapp.screen.movie_details.viewmodel.MovieDetailsViewModel
+import com.arvind.moviesapp.ui.theme.ColorBlack
 import com.arvind.moviesapp.ui.theme.ColorDivider
 import com.arvind.moviesapp.ui.theme.ColorWhite
 import com.arvind.moviesapp.ui.theme.GrapeFruitColor
@@ -294,7 +297,7 @@ fun VideoPlayer(
         }
     })
 
-    ConstraintLayout(modifier = modifier.background(Black)) {
+    ConstraintLayout(modifier = modifier.background(ColorBlack)) {
         val (title, videoPlayer) = createRefs()
         AnimatedVisibility(
             visible = visible.value,
@@ -316,6 +319,8 @@ fun VideoPlayer(
                     .wrapContentHeight()
             )
         }
+
+
         DisposableEffect(
             AndroidView(
                 modifier = modifier
@@ -330,8 +335,8 @@ fun VideoPlayer(
                     PlayerView(context).apply {
                         player = exoPlayer
                         layoutParams = FrameLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT
+                            MATCH_PARENT,
+                            MATCH_PARENT
                         )
                     }
                 })

@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.sp
 import com.arvind.moviesapp.ui.theme.ColorWhite
 
 @Composable
-fun CustomToolbar(title: String, onBack: () -> Unit) {
+fun CustomToolbar(
+    title: String,
+    onBack: () -> Unit
+) {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp
