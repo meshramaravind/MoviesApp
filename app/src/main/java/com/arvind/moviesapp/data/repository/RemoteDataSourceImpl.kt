@@ -15,6 +15,7 @@ import com.arvind.moviesapp.domain.repository.RemoteDataSource
 import com.arvind.moviesapp.utils.Constants.ITEMS_PER_PAGE
 import com.arvind.moviesapp.utils.Resource
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 class RemoteDataSourceImpl(
     private val moviesAPI: MoviesAPI
@@ -35,7 +36,6 @@ class RemoteDataSourceImpl(
         } catch (e: Exception) {
             return Resource.Error("Unknown Error")
         }
-
         return Resource.Success(response)
     }
 

@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -57,13 +59,11 @@ import com.arvind.moviesapp.screen.movie_details.viewmodel.MovieDetailsViewModel
 import com.arvind.moviesapp.ui.theme.ColorDivider
 import com.arvind.moviesapp.ui.theme.ColorWhite
 import com.arvind.moviesapp.ui.theme.GrapeFruitColor
-import com.arvind.moviesapp.ui.theme.primaryPurpleColor
 import com.arvind.moviesapp.utils.Resource
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
-@kotlin.OptIn(ExperimentalAnimationApi::class)
 @Destination
 @Composable
 fun VideoPlayerScreen(
@@ -76,6 +76,23 @@ fun VideoPlayerScreen(
         value = viewModel.getMovieVideos(movieId)
     }.value
 
+    if (videoResponse is Resource.Success) {
+        DisplayMovieVideo(videoResponse.data)
+    } else {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+
+
+}
+
+@kotlin.OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun DisplayMovieVideo(videoResponse: VideosResponse?) {
     val playingIndex = remember {
         mutableStateOf(0)
     }
@@ -83,9 +100,8 @@ fun VideoPlayerScreen(
     fun onTrailerChange(index: Int) {
         playingIndex.value = index
     }
-
     Column {
-        videoResponse.data?.results?.let {
+        videoResponse?.results?.let {
             VideoPlayer(
                 modifier = Modifier.weight(1f, fill = true),
                 movieVideos = it,
@@ -96,9 +112,9 @@ fun VideoPlayerScreen(
         LazyColumn(
             modifier = Modifier.weight(1f, fill = true),
             content = {
-                videoResponse.data?.let {
+                videoResponse?.let {
                     itemsIndexed(it.results) { index, trailer ->
-                        ShowTrailers(
+                        DisplayTrailers(
                             index = index,
                             trailer = trailer,
                             playingIndex = playingIndex,
@@ -107,11 +123,10 @@ fun VideoPlayerScreen(
                 }
             })
     }
-
 }
 
 @Composable
-fun ShowTrailers(
+fun DisplayTrailers(
     index: Int,
     trailer: ResultsItem,
     playingIndex: State<Int>,

@@ -1,5 +1,6 @@
 package com.arvind.moviesapp.screen.movie_details
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
@@ -19,6 +20,7 @@ import com.arvind.moviesapp.utils.Constants
 import com.arvind.moviesapp.utils.Resource
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import timber.log.Timber
 
 @Destination
 @Composable
