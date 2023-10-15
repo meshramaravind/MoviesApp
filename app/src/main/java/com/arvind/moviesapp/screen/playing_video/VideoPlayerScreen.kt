@@ -1,6 +1,5 @@
 package com.arvind.moviesapp.screen.playing_video
 
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import androidx.annotation.OptIn
@@ -25,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -50,12 +48,12 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.SimpleExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.arvind.moviesapp.R
 import com.arvind.moviesapp.domain.models.videos.ResultsItem
+import com.arvind.moviesapp.domain.models.videos.VideoData
 import com.arvind.moviesapp.domain.models.videos.VideosResponse
 import com.arvind.moviesapp.screen.movie_details.viewmodel.MovieDetailsViewModel
 import com.arvind.moviesapp.ui.theme.ColorBlack
@@ -252,9 +250,10 @@ fun VideoPlayer(
         mutableStateOf(movieVideos[playingIndex.value].name)
     }
     val mediaItems = arrayListOf<MediaItem>()
-    movieVideos.forEach {
+    VideoData.videoModels.forEach {
         mediaItems.add(
-            MediaItem.Builder().setUri(it.key).setMediaId(it.id).setTag(it)
+            MediaItem.Builder().setUri(it.videoUrl).setMediaId(it.id.toString())
+                .setTag(it)
                 .setMediaMetadata(MediaMetadata.Builder().setDisplayTitle(it.name).build())
                 .build()
         )
@@ -334,6 +333,7 @@ fun VideoPlayer(
                 factory = {
                     PlayerView(context).apply {
                         player = exoPlayer
+
                         layoutParams = FrameLayout.LayoutParams(
                             MATCH_PARENT,
                             MATCH_PARENT
